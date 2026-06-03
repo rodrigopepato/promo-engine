@@ -9,6 +9,17 @@ services:
     depends_on:
       - mysql
 
+  scheduler:
+    build: .
+    container_name: promo_engine_scheduler
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - app
+      - mysql
+      - n8n
+    command: php artisan schedule:work
+
   mysql:
     image: mysql:8.0
     container_name: promo_engine_mysql

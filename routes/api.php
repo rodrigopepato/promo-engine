@@ -3,6 +3,7 @@
 use App\Http\Controllers\OfertaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ColetorOfertaController;
+use Illuminate\Support\Facades\DB;
 
 Route::post('/ofertas/processar', [OfertaController::class, 'processar']);
 
@@ -19,7 +20,7 @@ Route::get('/health', function () {
             'database' => 'ok',
             'timestamp' => now()->toIso8601String(),
         ]);
-    } catch (Throwable $exception) {
+    } catch (\Throwable $exception) {
         return response()->json([
             'status' => 'error',
             'app' => config('app.name'),
@@ -30,3 +31,5 @@ Route::get('/health', function () {
         ], 500);
     }
 });
+
+Route::post('/coletor/executar', [ColetorOfertaController::class, 'executar']);
