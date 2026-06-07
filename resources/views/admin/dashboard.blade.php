@@ -10,6 +10,10 @@
     Nova Promoção
 </a>
 
+<a href="{{ route('admin.promocoes.index') }}">
+    Ver promoções publicadas
+</a>
+
 <p>Total de coletas: {{ $totalColetas }}</p>
 <p>Total de ofertas publicadas: {{ $totalOfertasPublicadas }}</p>
 <p>Total de falhas: {{ $totalFalhas }}</p>

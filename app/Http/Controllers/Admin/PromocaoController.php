@@ -5,9 +5,21 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\Publicacao\EnviadorOfertaN8n;
+use App\Models\OfertaPublicada;
 
 class PromocaoController extends Controller
 {
+
+    public function index()
+    {
+        $ofertas = OfertaPublicada::latest()
+            ->limit(50)
+            ->get();
+
+        return view('admin.promocoes.index', [
+            'ofertas' => $ofertas,
+        ]);
+    }
     public function create()
     {
         return view('admin.promocoes.create');

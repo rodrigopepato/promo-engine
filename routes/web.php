@@ -20,3 +20,6 @@ Route::post('/admin/promocoes', [PromocaoController::class, 'store'])
 Route::get('/admin/promocoes', function () {
     return redirect()->route('admin.promocoes.create');
 });
+
+Route::get('/admin/promocoes', [PromocaoController::class, 'index'])
+    ->name('admin.promocoes.index');
