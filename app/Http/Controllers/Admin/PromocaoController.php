@@ -53,7 +53,7 @@ class PromocaoController extends Controller
         $enviadorOfertaN8n->enviar($oferta);
 
         return redirect()
-            ->route('admin.dashboard')
-            ->with('success', 'Promoção publicada com sucesso.');
+            ->route('admin.promocoes.create')
+            ->with('success', 'Promoção publicada com sucesso. Você já pode cadastrar a próxima.');
     }
 }

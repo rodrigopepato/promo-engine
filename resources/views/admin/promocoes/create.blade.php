@@ -1,7 +1,18 @@
 <h1>Nova Promoção</h1>
 
+@if (session('success'))
+    <p style="color: green;">
+        {{ session('success') }}
+    </p>
+@endif
+
 <a href="{{ route('admin.dashboard') }}">
     Voltar para o dashboard
+</a>
+
+<br>
+<a href="{{ route('admin.promocoes.index') }}">
+    Ver promoções publicadas
 </a>
 
 @if ($errors->any())
