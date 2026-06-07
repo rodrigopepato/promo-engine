@@ -23,3 +23,6 @@ Route::get('/admin/promocoes', function () {
 
 Route::get('/admin/promocoes', [PromocaoController::class, 'index'])
     ->name('admin.promocoes.index');
+
+Route::post('/admin/promocoes/revisar', [PromocaoController::class, 'review'])
+    ->name('admin.promocoes.review');

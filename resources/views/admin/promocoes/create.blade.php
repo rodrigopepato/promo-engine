@@ -27,7 +27,7 @@
     </div>
 @endif
 
-<form method="POST" action="{{ route('admin.promocoes.store') }}">
+<form method="POST" action="{{ route('admin.promocoes.review') }}">
     @csrf
 
     <div>
@@ -75,5 +75,5 @@
         <input type="text" name="cupom_codigo" value="{{ old('cupom_codigo') }}">
     </div>
 
-    <button type="submit">Publicar promoção</button>
+    <button type="submit">Revisar promoção</button>
 </form>
