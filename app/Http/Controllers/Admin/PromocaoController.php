@@ -34,7 +34,7 @@ class PromocaoController extends Controller
             'preco_original' => ['nullable', 'numeric', 'min:0'],
             'preco_promocao' => ['required', 'numeric', 'min:0'],
             'tem_cupom' => ['nullable', 'boolean'],
-            'cupom_codigo' => ['nullable', 'string', 'max:50'],
+            'cupom_codigo' => ['nullable', 'required_if:tem_cupom,1', 'string', 'max:50'],
         ]);
 
         $oferta = [
