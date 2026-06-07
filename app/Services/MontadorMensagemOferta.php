@@ -17,38 +17,32 @@ class MontadorMensagemOferta
         $marketplaceFormatado = match ($marketplace) {
             'amazon' => 'Amazon',
             'mercadolivre' => 'Mercado Livre',
-            default => 'Marketplace desconhecido',
+            default => 'Marketplace',
         };
 
+        $mensagem = [];
+
+        $mensagem[] = '🔥 OFERTA ENCONTRADA';
+        $mensagem[] = $titulo;
+
         if ($precoOriginal) {
-            $precoFormatado = 'De R$' . number_format($precoOriginal, 2, ',', '.') .
-                ' | Por R$' . number_format($precoAtual, 2, ',', '.') . ' 💰';
-        } else {
-            $precoFormatado = 'Por R$' . number_format($precoAtual, 2, ',', '.') . ' 💰';
+            $mensagem[] = 'De: R$ ' . number_format($precoOriginal, 2, ',', '.');
         }
 
-        $cupomFormatado = '';
+        $mensagem[] = 'Por: R$ ' . number_format($precoAtual, 2, ',', '.') . ' 💰';
 
         if ($temCupom) {
             if ($cupomCodigo) {
-                $cupomFormatado = 'Cupom: ' . $cupomCodigo . ' ⚠️';
+                $mensagem[] = '🎟️ Cupom: ' . $cupomCodigo;
             } else {
-                $cupomFormatado = 'Cupom disponível ⚠️';
+                $mensagem[] = '🎟️ Cupom disponível';
             }
         }
 
-        $partesMensagem = [
-            $titulo,
-            $precoFormatado,
-        ];
+        $mensagem[] = '🛒 Loja: ' . $marketplaceFormatado;
+        $mensagem[] = '👉 Comprar agora:';
+        $mensagem[] = $produtoUrl;
 
-        if ($cupomFormatado !== '') {
-            $partesMensagem[] = $cupomFormatado;
-        }
-
-        $partesMensagem[] = '🛒 Achado no ' . $marketplaceFormatado;
-        $partesMensagem[] = '👉 ' . $produtoUrl;
-
-        return implode("\n\n", $partesMensagem);
+        return implode("\n\n", $mensagem);
     }
 }
