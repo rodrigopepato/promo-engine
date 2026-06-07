@@ -13,3 +13,6 @@ Route::get('/admin', [DashboardController::class, 'index'])
 
 Route::get('/admin/promocoes/nova', [PromocaoController::class, 'create'])
     ->name('admin.promocoes.create');
+
+Route::post('/admin/promocoes', [PromocaoController::class, 'store'])
+    ->name('admin.promocoes.store');
