@@ -2,6 +2,7 @@ services:
   app:
     build: .
     container_name: promo_engine_app
+    user: "${UID}:${GID}"
     ports:
       - "8000:8000"
     volumes:
@@ -12,6 +13,7 @@ services:
   scheduler:
     build: .
     container_name: promo_engine_scheduler
+    user: "${UID}:${GID}"
     volumes:
       - .:/var/www/html
     depends_on:

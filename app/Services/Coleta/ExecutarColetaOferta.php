@@ -9,6 +9,7 @@ class ExecutarColetaOferta
     public function __construct(
         private ExecutorColeta $executorColeta,
         private EnviadorOfertaN8n $enviadorOfertaN8n,
+        private RegistradorColeta $registradorColeta,
     ) {
     }
 
@@ -28,11 +29,15 @@ class ExecutarColetaOferta
             }
         }
 
-        return new ResultadoColeta(
+        $resultado = new ResultadoColeta(
             totalOfertas: count($ofertas),
             enviadas: $enviadas,
             falhas: $falhas,
             ofertas: $ofertas,
         );
+
+        $this->registradorColeta->registrar($resultado);
+
+        return $resultado;
     }
 }
