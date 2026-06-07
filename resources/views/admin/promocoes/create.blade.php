@@ -45,8 +45,12 @@
     </div>
 
     <div>
-        <label>URL do produto</label>
+        <label>URL do produto / link de afiliado</label>
         <input type="url" name="produto_url" value="{{ old('produto_url') }}" required>
+
+        <small>
+            Cole aqui preferencialmente o seu link de afiliado.
+        </small>
     </div>
 
     <div>
