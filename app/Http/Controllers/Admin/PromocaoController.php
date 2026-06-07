@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Services\Publicacao\EnviadorOfertaN8n;
 
 class PromocaoController extends Controller
 {
@@ -12,7 +13,7 @@ class PromocaoController extends Controller
         return view('admin.promocoes.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request, EnviadorOfertaN8n $enviadorOfertaN8n)
     {
         $dados = $request->validate([
             'marketplace' => ['required', 'in:amazon,mercadolivre'],
@@ -24,6 +25,23 @@ class PromocaoController extends Controller
             'cupom_codigo' => ['nullable', 'string', 'max:50'],
         ]);
 
-        dd($dados);
+        $oferta = [
+            'marketplace' => $dados['marketplace'],
+            'produto_id' => 'ADMIN-' . md5($dados['produto_url']),
+            'titulo' => $dados['titulo'],
+            'produto_url' => $dados['produto_url'],
+            'preco_original' => $dados['preco_original'] ?? null,
+            'preco_atual' => $dados['preco_promocao'],
+            'tem_cupom' => $request->boolean('tem_cupom'),
+            'cupom_codigo' => $dados['cupom_codigo'] ?? null,
+            'origem' => 'admin',
+            'coletado_em' => now()->toDateTimeString(),
+        ];
+
+        $enviadorOfertaN8n->enviar($oferta);
+
+        return redirect()
+            ->route('admin.dashboard')
+            ->with('success', 'Promoção publicada com sucesso.');
     }
 }

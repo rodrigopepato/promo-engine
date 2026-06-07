@@ -16,3 +16,7 @@ Route::get('/admin/promocoes/nova', [PromocaoController::class, 'create'])
 
 Route::post('/admin/promocoes', [PromocaoController::class, 'store'])
     ->name('admin.promocoes.store');
+
+Route::get('/admin/promocoes', function () {
+    return redirect()->route('admin.promocoes.create');
+});

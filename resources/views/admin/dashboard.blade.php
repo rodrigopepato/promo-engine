@@ -1,5 +1,11 @@
 <h1>Admin Promo Engine</h1>
 
+@if (session('success'))
+    <p style="color: green;">
+        {{ session('success') }}
+    </p>
+@endif
+
 <a href="{{ route('admin.promocoes.create') }}">
     Nova Promoção
 </a>
