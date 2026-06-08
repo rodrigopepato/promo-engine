@@ -16,6 +16,10 @@ class DashboardController extends Controller
             'totalFalhas' => Coleta::sum('falhas'),
             'ultimasOfertas' => OfertaPublicada::latest()->limit(5)->get(),
             'ultimasColetas' => Coleta::latest()->limit(5)->get(),
+            'totalPromocoesHoje' => OfertaPublicada::whereDate(
+                'publicado_em',
+                now()->toDateString()
+            )->count(),
         ]);
     }
 }
