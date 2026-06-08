@@ -56,22 +56,4 @@ class PromocaoController extends Controller
             ->route('admin.promocoes.create')
             ->with('success', 'Promoção publicada com sucesso. Você já pode cadastrar a próxima.');
     }
-
-    public function review(Request $request)
-    {
-        $dados = $request->validate([
-            'marketplace' => ['required', 'in:amazon,mercadolivre'],
-            'titulo' => ['required', 'string', 'max:255'],
-            'produto_url' => ['required', 'url'],
-            'preco_original' => ['nullable', 'numeric', 'min:0'],
-            'preco_promocao' => ['required', 'numeric', 'min:0'],
-            'tem_cupom' => ['nullable', 'boolean'],
-            'cupom_codigo' => ['nullable', 'required_if:tem_cupom,1', 'string', 'max:50'],
-        ]);
-
-        return view('admin.promocoes.review', [
-            'dados' => $dados,
-            'temCupom' => $request->boolean('tem_cupom'),
-        ]);
-    }
 }
