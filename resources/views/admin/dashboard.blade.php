@@ -1,19 +1,25 @@
-<h1>Admin Promo Engine</h1>
+@extends('layouts.admin')
+
+@section('content')
+
+<h1>Dashboard</h1>
 
 @if (session('success'))
-    <p style="color: green;">
+    <div class="success">
         {{ session('success') }}
-    </p>
+    </div>
 @endif
 
-<a href="{{ route('admin.promocoes.create') }}">
+<p>Total de coletas: <strong>{{ $totalColetas }}</strong></p>
+<p>Total de ofertas publicadas: <strong>{{ $totalOfertasPublicadas }}</strong></p>
+<p>Total de falhas: <strong>{{ $totalFalhas }}</strong></p>
+
+<a href="{{ route('admin.promocoes.create') }}" class="btn">
     Nova Promoção
 </a>
 
-<a href="{{ route('admin.promocoes.index') }}">
-    Ver promoções publicadas
+<a href="{{ route('admin.promocoes.index') }}" class="btn btn-secondary">
+    Ver Promoções Publicadas
 </a>
 
-<p>Total de coletas: {{ $totalColetas }}</p>
-<p>Total de ofertas publicadas: {{ $totalOfertasPublicadas }}</p>
-<p>Total de falhas: {{ $totalFalhas }}</p>
+@endsection
