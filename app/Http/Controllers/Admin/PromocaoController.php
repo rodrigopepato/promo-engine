@@ -10,9 +10,20 @@ use App\Models\OfertaPublicada;
 class PromocaoController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $ofertas = OfertaPublicada::latest()
+        $query = OfertaPublicada::query();
+
+        if ($request->filled('marketplace')) {
+            $query->where('marketplace', $request->marketplace);
+        }
+
+        if ($request->filled('titulo')) {
+            $query->where('titulo', 'like', '%' . $request->titulo . '%');
+        }
+
+        $ofertas = $query
+            ->latest()
             ->limit(50)
             ->get();
 

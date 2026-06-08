@@ -15,6 +15,69 @@
     </a>
 </div>
 
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+
+        <form method="GET">
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <label class="form-label">
+                        Marketplace
+                    </label>
+
+                    <select name="marketplace" class="form-select">
+                        <option value="">
+                            Todos
+                        </option>
+
+                        <option
+                            value="amazon"
+                            @selected(request('marketplace') === 'amazon')
+                        >
+                            Amazon
+                        </option>
+
+                        <option
+                            value="mercadolivre"
+                            @selected(request('marketplace') === 'mercadolivre')
+                        >
+                            Mercado Livre
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Título
+                    </label>
+
+                    <input
+                        type="text"
+                        name="titulo"
+                        class="form-control"
+                        value="{{ request('titulo') }}"
+                        placeholder="Pesquisar promoção..."
+                    >
+                </div>
+
+                <div class="col-md-2 d-flex align-items-end">
+                    <button
+                        type="submit"
+                        class="btn btn-primary w-100"
+                    >
+                        Filtrar
+                    </button>
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
 <div class="card shadow-sm">
     <div class="card-body">
 
