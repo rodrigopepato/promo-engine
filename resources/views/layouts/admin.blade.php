@@ -1,118 +1,88 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <title>Promo Engine Admin</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
-            color: #222;
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        header {
-            background: #111827;
-            color: white;
-            padding: 16px 32px;
-        }
-
-        main {
-            max-width: 1100px;
-            margin: 32px auto;
-            background: white;
-            padding: 24px;
-            border-radius: 8px;
-        }
-
-        a {
-            color: #2563eb;
-            text-decoration: none;
-        }
-
-        .nav {
-            margin-top: 8px;
-        }
-
-        .nav a {
-            color: #d1d5db;
-            margin-right: 16px;
-        }
-
-        .btn {
-            display: inline-block;
-            background: #2563eb;
-            color: white;
-            padding: 10px 14px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-secondary {
-            background: #4b5563;
-        }
-
-        .success {
-            background: #dcfce7;
-            color: #166534;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 16px;
-        }
-
-        .error {
-            background: #fee2e2;
-            color: #991b1b;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 16px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 4px;
-            margin-bottom: 14px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-        }
-
-        label {
-            font-weight: bold;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border-bottom: 1px solid #e5e7eb;
-            padding: 12px;
-            text-align: left;
-        }
-
-        th {
-            background: #f9fafb;
-        }
-    </style>
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
 </head>
 
 <body>
-    <header>
-        <strong>Promo Engine Admin</strong>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{{ route('admin.dashboard') }}">
+                Promo Engine
+            </a>
 
-        <div class="nav">
-            <a href="{{ route('admin.dashboard') }}">Dashboard</a>
-            <a href="{{ route('admin.promocoes.create') }}">Nova Promoção</a>
-            <a href="{{ route('admin.promocoes.index') }}">Promoções Publicadas</a>
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#adminNavbar"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="adminNavbar">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.promocoes.create') }}">
+                            Nova Promoção
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.promocoes.index') }}">
+                            Promoções Publicadas
+                        </a>
+                    </li>
+
+                </ul>
+
+                <button id="themeToggle" class="btn btn-outline-secondary btn-sm">
+                    Alternar tema
+                </button>
+            </div>
         </div>
-    </header>
+    </nav>
 
-    <main>
+    <main class="container py-4">
         @yield('content')
     </main>
+
+    <script>
+        const html = document.documentElement;
+        const themeToggle = document.getElementById('themeToggle');
+
+        const savedTheme = localStorage.getItem('promo-engine-theme');
+
+        if (savedTheme) {
+            html.setAttribute('data-bs-theme', savedTheme);
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-bs-theme');
+            const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            html.setAttribute('data-bs-theme', nextTheme);
+            localStorage.setItem('promo-engine-theme', nextTheme);
+        });
+    </script>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
 </body>
 </html>
