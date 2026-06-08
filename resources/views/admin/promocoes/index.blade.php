@@ -1,97 +1,123 @@
-<h1>Promoções Publicadas</h1>
+@extends('layouts.admin')
 
-<a href="{{ route('admin.dashboard') }}">
-    Dashboard
-</a>
+@section('content')
 
-|
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="mb-1">Promoções Publicadas</h1>
+        <p class="text-body-secondary mb-0">
+            Histórico das ofertas enviadas para o Telegram.
+        </p>
+    </div>
 
-<a href="{{ route('admin.promocoes.create') }}">
-    Nova Promoção
-</a>
+    <a href="{{ route('admin.promocoes.create') }}" class="btn btn-primary">
+        Nova Promoção
+    </a>
+</div>
 
-<br><br>
+<div class="card shadow-sm">
+    <div class="card-body">
 
-@if ($ofertas->isEmpty())
-    <p>Nenhuma promoção publicada.</p>
-@else
+        @if ($ofertas->isEmpty())
 
-<table border="1" cellpadding="8" cellspacing="0">
+            <div class="alert alert-info mb-0">
+                Nenhuma promoção publicada ainda.
+            </div>
 
-    <thead>
-        <tr>
-            <th>Título</th>
-            <th>Marketplace</th>
-            <th>Preço</th>
-            <th>Cupom</th>
-            <th>Data</th>
-        </tr>
-    </thead>
+        @else
 
-    <tbody>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
 
-    @foreach ($ofertas as $oferta)
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Marketplace</th>
+                            <th>Preço</th>
+                            <th>Cupom</th>
+                            <th>Publicado em</th>
+                            <th></th>
+                        </tr>
+                    </thead>
 
-        <tr>
+                    <tbody>
+                        @foreach ($ofertas as $oferta)
+                            <tr>
+                                <td>
+                                    <strong>{{ $oferta->titulo }}</strong>
 
-            <td>
-                <strong>{{ $oferta->titulo }}</strong>
-                <br>
-                <small>
-                    <a href="{{ $oferta->produto_url }}" target="_blank">
-                        Abrir produto
-                    </a>
-                </small>
-            </td>
+                                    <br>
 
-            <td>
-                {{ ucfirst($oferta->marketplace) }}
-            </td>
+                                    <small class="text-body-secondary">
+                                        {{ $oferta->produto_id }}
+                                    </small>
+                                </td>
 
-            <td>
+                                <td>
+                                    @if ($oferta->marketplace === 'amazon')
+                                        <span class="badge text-bg-warning">
+                                            Amazon
+                                        </span>
+                                    @elseif ($oferta->marketplace === 'mercadolivre')
+                                        <span class="badge text-bg-info">
+                                            Mercado Livre
+                                        </span>
+                                    @else
+                                        <span class="badge text-bg-secondary">
+                                            {{ $oferta->marketplace }}
+                                        </span>
+                                    @endif
+                                </td>
 
-                @if($oferta->preco_original)
-                    <small>
-                        De R$ {{ number_format($oferta->preco_original, 2, ',', '.') }}
-                    </small>
+                                <td>
+                                    @if ($oferta->preco_original)
+                                        <small class="text-body-secondary">
+                                            De R$ {{ number_format($oferta->preco_original, 2, ',', '.') }}
+                                        </small>
 
-                    <br>
-                @endif
+                                        <br>
+                                    @endif
 
-                <strong>
-                    R$ {{ number_format($oferta->preco_atual, 2, ',', '.') }}
-                </strong>
+                                    <strong>
+                                        R$ {{ number_format($oferta->preco_atual, 2, ',', '.') }}
+                                    </strong>
+                                </td>
 
-            </td>
+                                <td>
+                                    @if ($oferta->tem_cupom)
+                                        <span class="badge text-bg-success">
+                                            {{ $oferta->cupom_codigo ?: 'Disponível' }}
+                                        </span>
+                                    @else
+                                        <span class="text-body-secondary">
+                                            -
+                                        </span>
+                                    @endif
+                                </td>
 
-            <td>
+                                <td>
+                                    {{ \Carbon\Carbon::parse($oferta->publicado_em)->format('d/m/Y H:i') }}
+                                </td>
 
-                @if($oferta->tem_cupom)
+                                <td class="text-end">
+                                    <a
+                                        href="{{ $oferta->produto_url }}"
+                                        target="_blank"
+                                        class="btn btn-sm btn-outline-secondary"
+                                    >
+                                        Abrir produto
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
 
-                    @if($oferta->cupom_codigo)
-                        {{ $oferta->cupom_codigo }}
-                    @else
-                        Disponível
-                    @endif
+                </table>
+            </div>
 
-                @else
+        @endif
 
-                    -
+    </div>
+</div>
 
-                @endif
-
-            </td>
-
-            <td>
-                {{ \Carbon\Carbon::parse($oferta->publicado_em)->format('d/m/Y H:i') }}
-            </td>
-
-        </tr>
-
-    @endforeach
-
-    </tbody>
-
-</table>
-
-@endif
+@endsection
